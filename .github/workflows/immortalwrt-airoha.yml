@@ -138,6 +138,11 @@ jobs:
         VERSION_INFO=$(git show -s --date=short --format="作者: %an<br/>时间: %cd<br/>内容: %s<br/>hash: %H")
         echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
 
+    - name: Modify Default IP(修改默认IP)
+      run: |
+        cd $OPENWRT_PATH
+        sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
+
     - name: Patch DRAM Size(设置内存上限)
       if: env.DRAM_SIZE != ''
       run: |
@@ -744,7 +749,7 @@ jobs:
           - 📐 设备定义：`${{ env.DEVICE_SYMBOL }}`
           - 💻 目标分支：${{ env.REPO_BRANCH }}
           - ⚽ 固件源码: ${{ env.REPO_URL }}
-          - 🌐 默认地址: 192.168.1.1
+          - 🌐 默认地址: 192.168.2.1
           - 🔑 默认密码: 无
           ### 💾 分区布局与刷机方式
           ${{ env.LAYOUT_NOTE }}
